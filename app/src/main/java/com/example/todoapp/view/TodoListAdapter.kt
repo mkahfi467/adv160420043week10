@@ -22,9 +22,12 @@ class TodoListAdapter(val todoList:ArrayList<Todo>, val adapterOnClick : (Todo) 
     override fun onBindViewHolder(holder: TodoViewHolder, position: Int) {
         var checktask = holder.view.findViewById<CheckBox>(R.id.checkTask)
         checktask.text = todoList[position].title
+        checktask.isChecked = false
 
         checktask.setOnCheckedChangeListener { compoundButton, b ->
-            adapterOnClick(todoList[position])
+            if (b) {
+                adapterOnClick(todoList[position])
+            }
         }
     }
     override fun getItemCount(): Int {

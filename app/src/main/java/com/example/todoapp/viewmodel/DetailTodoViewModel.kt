@@ -15,12 +15,12 @@ class DetailTodoViewModel(application: Application)
     : AndroidViewModel(application), CoroutineScope {
 
     private val job = Job()
-    fun addTodo(list:List<Todo>) {
+    fun addTodo(todo:Todo) {
         launch {
             val db = Room.databaseBuilder(
                 getApplication(), TodoDatabase::class.java,
                 "newtododb").build()
-            db.todoDao().insertAll(*list.toTypedArray())
+            db.todoDao().insertAll(todo)
         }
     }
 

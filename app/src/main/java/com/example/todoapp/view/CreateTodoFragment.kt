@@ -34,8 +34,9 @@ class CreateTodoFragment : Fragment() {
             val txtTitle = view.findViewById<EditText>(R.id.txtTitle)
             val txtNotes = view.findViewById<EditText>(R.id.txtNotes)
             var todo = Todo(txtTitle.text.toString(), txtNotes.text.toString())
-            val list = listOf(todo)
-            viewModel.addTodo(list)
+//            val list = listOf(todo)
+            viewModel.addTodo(todo)
+
             Toast.makeText(view.context, "Data added", Toast.LENGTH_LONG).show()
             Navigation.findNavController(it).popBackStack()
         }
