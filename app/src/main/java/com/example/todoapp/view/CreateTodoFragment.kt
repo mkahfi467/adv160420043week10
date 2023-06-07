@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
@@ -33,7 +35,12 @@ class CreateTodoFragment : Fragment() {
         btnAdd.setOnClickListener {
             val txtTitle = view.findViewById<EditText>(R.id.txtTitle)
             val txtNotes = view.findViewById<EditText>(R.id.txtNotes)
-            var todo = Todo(txtTitle.text.toString(), txtNotes.text.toString())
+
+            // CARA CEPAT UNTUK MENDAPATKAN RADIO YANG TERPILIH
+            val radioGroup = view.findViewById<RadioGroup>(R.id.rdoGroupPriority)
+            val radioButton = view.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
+
+            var todo = Todo(txtTitle.text.toString(), txtNotes.text.toString(), radioButton.text.toString().toInt())
 //            val list = listOf(todo)
             viewModel.addTodo(todo)
 

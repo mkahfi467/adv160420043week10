@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.TextView
+import android.widget.*
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.todoapp.R
 import com.example.todoapp.viewmodel.DetailTodoViewModel
 import com.google.android.material.textfield.TextInputEditText
@@ -36,6 +35,18 @@ class EditTodoFragment : Fragment() {
 
         val uuid = EditTodoFragmentArgs.fromBundle(requireArguments()).uuid
         viewModel.fetch(uuid)
+
+        btnAdd.setOnClickListener {
+            val txtTitle = view.findViewById<EditText>(R.id.txtTitle)
+            val txtNotes = view.findViewById<EditText>(R.id.txtNotes)
+            val radioGroup = view.findViewById<RadioGroup>(R.id.rdoGroupPriority)
+            val radioButton = view.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
+
+            viewModel.update(txtTitle.text.toString(), txtNotes.text.toString(), radioButton.text.toString().toInt(), uuid)
+            Toast.makeText(view.context, "Todo updated", Toast.LENGTH_SHORT).show()
+            Navigation.findNavController(it).popBackStack()
+        }
+
         observeViewModel()
 
     }
@@ -46,6 +57,16 @@ class EditTodoFragment : Fragment() {
             txtTitle?.setText(it.title)
             val txtNotes = view?.findViewById<TextInputEditText>(R.id.txtNotes)
             txtNotes?.setText(it.notes)
+
+            val high = view?.findViewById<RadioButton>(R.id.rdoHigh)
+            val medium = view?.findViewById<RadioButton>(R.id.rdoMedium)
+            val low = view?.findViewById<RadioButton>(R.id.rdoLow)
+
+            when(it.priority) {
+                1->low?.isChecked = true
+                2->medium?.isChecked = true
+                3->high?.isChecked = true
+            }
         })
     }
 
