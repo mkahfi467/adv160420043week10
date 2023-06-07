@@ -42,7 +42,7 @@ class EditTodoFragment : Fragment() {
             val radioGroup = view.findViewById<RadioGroup>(R.id.rdoGroupPriority)
             val radioButton = view.findViewById<RadioButton>(radioGroup.checkedRadioButtonId)
 
-            viewModel.update(txtTitle.text.toString(), txtNotes.text.toString(), radioButton.text.toString().toInt(), uuid)
+            viewModel.update(txtTitle.text.toString(), txtNotes.text.toString(), radioButton.tag.toString().toInt(), uuid)
             Toast.makeText(view.context, "Todo updated", Toast.LENGTH_SHORT).show()
             Navigation.findNavController(it).popBackStack()
         }
